@@ -6,10 +6,9 @@ import copy
 
 from faker import Faker
 import sqlalchemy
-from sqlalchemy import select, update, inspect
+from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm.session import sessionmaker
-from sqlalchemy.ext.asyncio import AsyncSession
 
 import models
 
@@ -50,7 +49,6 @@ async def get_recipe_ingredients(
     for _ in range(0, nbr):
         # We want some ingredient shared by recipe
         ingredient: models.Ingredient = random.choice(ingredients)
-        print(ingredient.name)
 
         # In case we don't know if our ingredient already exists
         # I have not seen any other way than this method
@@ -117,8 +115,8 @@ def get_ingredients(nbr: int = 10) -> List[models.Ingredient]:
 async def main():
     async with async_session() as session:
         cakes = await create_cakes(session, 2)
+        # Get 2 ingredients + 2 duplicates ingredients => So 4 ingredients
         ingredients = get_ingredients(2)
-        random.shuffle(ingredients)
 
         await create_recipe(session, cakes, ingredients, 2)
 
