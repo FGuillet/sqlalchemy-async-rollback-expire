@@ -37,7 +37,6 @@ async def create_cakes(session: AsyncSession, nbr: int = 10) -> List[models.Cake
 
         cakes.append(cake)
 
-    await session.commit()
     return cakes
 
 
