@@ -52,7 +52,8 @@ async def get_recipe_ingredients(
         ingredient: models.Ingredient = random.choice(ingredients)
         print(ingredient.name)
 
-        # Upsert
+        # In case we don't know if our ingredient already exists
+        # I have not seen any other way than this method
         try:
             session.add(ingredient)
             await session.commit()
